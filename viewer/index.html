@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Bubble Level Viewer</title>
+  <style>
+    :root { color-scheme: light; }
+    body {
+      margin: 0;
+      font-family: -apple-system, "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+      background: #f6f7fb;
+      color: #1d2333;
+    }
+    header { padding: 16px 24px; background: #1d2333; color: white; }
+    header h1 { margin: 0; font-size: 18px; letter-spacing: 0.5px; }
+    header p { margin: 4px 0 0; font-size: 13px; opacity: 0.7; }
+    main {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      padding: 24px;
+      align-items: start;
+    }
+    .panel {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: 16px 20px;
+    }
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: #6c7393;
+    }
+    .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    select, button {
+      font: inherit; padding: 6px 10px;
+      border: 1px solid #c8cdd9; border-radius: 6px;
+      background: #fff; color: #1d2333;
+    }
+    select {
+      color-scheme: light;
+      -webkit-appearance: none; appearance: none;
+      padding-right: 26px;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%231d2333' d='M0 0l5 6 5-6z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+    }
+    select option {
+      background-color: #ffffff !important;
+      color: #1d2333 !important;
+    }
+    button { cursor: pointer; }
+    canvas { display: block; background: #f0f2f8; border-radius: 8px; }
+    table.kv { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.kv td { padding: 4px 0; }
+    table.kv td.k { color: #6c7393; }
+    table.kv td.v { text-align: right; font-variant-numeric: tabular-nums; }
+    .bots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .bot {
+      padding: 10px;
+      border-radius: 8px;
+      background: #f0f2f8;
+      text-align: center;
+    }
+    .bot .name { font-size: 11px; text-transform: uppercase; color: #6c7393; }
+    .bot .v { font-size: 22px; font-weight: 600; margin-top: 2px; }
+    .bot .lab { font-size: 11px; color: #6c7393; }
+    .upload { font-size: 12px; color: #6c7393; }
+    .empty { padding: 60px; text-align: center; color: #6c7393; }
+    .rationale { font-size: 13px; line-height: 1.55; }
+    .rationale .row { margin-top: 6px; display: flex; gap: 8px; }
+    .rationale .row .lbl {
+      flex: 0 0 80px; color: #6c7393;
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px;
+      padding-top: 2px;
+    }
+    .rationale .row .val { flex: 1; }
+    .rationale .summary {
+      font-size: 14px; font-weight: 600; color: #1d2333;
+      padding: 8px 10px; border-radius: 8px;
+      background: linear-gradient(120deg, #eef5ff, #f0f2f8);
+    }
+    .rationale .notes { color: #b54608; font-size: 12px; margin-top: 6px; }
+    .methods { font-size: 12.5px; line-height: 1.55; }
+    .methods .card {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f7f8fc;
+      border-left: 3px solid #4e79a7;
+      margin-top: 8px;
+    }
+    .methods .card.pattern { border-left-color: #59a14f; }
+    .methods .card .head {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1d2333;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+    .methods .card .formula {
+      font-family: "JetBrains Mono", "Consolas", "Menlo", monospace;
+      font-size: 11.5px;
+      color: #2a3553;
+      background: #ffffff;
+      padding: 4px 6px;
+      border-radius: 4px;
+      margin: 4px 0;
+      display: inline-block;
+    }
+    .methods .card .kv {
+      display: flex; gap: 6px; margin-top: 3px;
+    }
+    .methods .card .kv .lbl {
+      flex: 0 0 50px;
+      color: #6c7393;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding-top: 1px;
+    }
+    .methods .card .kv .val { flex: 1; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Bubble Shooter — Level Viewer</h1>
+  <p>생성된 레벨을 시각화하고 봇 통계를 확인합니다.</p>
+</header>
+
+<main>
+  <div class="panel">
+    <h2>배치 선택</h2>
+    <div class="controls">
+      <select id="batchSelect"></select>
+    </div>
+
+    <h2 style="margin-top:18px">레벨 선택</h2>
+    <div class="controls">
+      <select id="levelSelect"></select>
+      <button id="prev">◀</button>
+      <button id="next">▶</button>
+    </div>
+    <p class="upload" style="margin-top:14px">
+      자동 로드가 안 되면 아래에 <code>levels/L###.json</code>을 끌어다 놓으세요.
+      <input type="file" id="filePick" multiple accept=".json">
+    </p>
+
+    <h2 style="margin-top:20px">피처 벡터</h2>
+    <table class="kv" id="features"></table>
+
+    <h2 style="margin-top:20px">봇 캘리브레이션</h2>
+    <div class="bots" id="bots"></div>
+
+    <h2 style="margin-top:20px">레벨 메타</h2>
+    <table class="kv" id="meta"></table>
+
+    <h2 style="margin-top:20px">디자인 의도 (Why)</h2>
+    <div class="rationale" id="rationale"></div>
+
+    <h2 style="margin-top:20px">적용된 공식</h2>
+    <div class="methods" id="formulas"></div>
+
+    <h2 style="margin-top:20px">적용된 패턴</h2>
+    <div class="methods" id="patterns"></div>
+  </div>
+
+  <div class="panel">
+    <h2>보드</h2>
+    <canvas id="board" width="640" height="640"></canvas>
+    <div id="empty" class="empty" style="display:none">
+      먼저 레벨을 로드하세요.<br>
+      <code>python scripts/generate_batch.py</code> 실행 후<br>
+      <code>levels/</code> 폴더의 JSON 파일을 위 입력란에 끌어다 놓으세요.
+    </div>
+  </div>
+</main>
+
+<script>
+const COLORS = {
+  0: null,
+  1: "#e15759",
+  2: "#4e79a7",
+  3: "#59a14f",
+  4: "#f28e2b",
+  5: "#b07aa1",
+  6: "#76b7b2",
+  7: "#edc948",
+  8: "#9c755f",
+};
+
+// Available batches; the viewer auto-discovers levels from each path.
+const BATCHES = [
+  { id: "rationale_v2", label: "rationale v2 smoke (10) — 공식·패턴 표시",
+    path: "../experiments/rationale_v2_smoke/levels/", count: 10 },
+  { id: "iter4_smoke", label: "iter4 smoke (10) — shot_pressure 독립",
+    path: "../experiments/iter4_smoke/levels/", count: 10 },
+  { id: "iter3", label: "iter3 (100) — 부유 셀 금지 + Rationale",
+    path: "../levels/", count: 100 },
+  { id: "iter2_strict", label: "iter2 strict (100) — 엄격 좌우 대칭",
+    path: "../levels_iter2_strict_v2/", count: 100 },
+  { id: "iter2_soft", label: "iter2 soft (100) — 부드러운 대칭",
+    path: "../levels_iter2_soft/", count: 100 },
+  { id: "iter1", label: "iter1 (100) — 비대칭, 색 진행 없음",
+    path: "../levels_iter1/", count: 100 },
+];
+
+const state = { levels: [], index: 0, batch: BATCHES[0].id };
+
+const $ = (sel) => document.querySelector(sel);
+
+function fmt(n, p = 3) {
+  if (n === null || n === undefined) return "—";
+  if (Number.isInteger(n)) return n.toString();
+  return Number(n).toFixed(p);
+}
+
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+
+function makeKvRow(key, value) {
+  const tr = document.createElement("tr");
+  const k = document.createElement("td");
+  k.className = "k";
+  k.textContent = key;
+  const v = document.createElement("td");
+  v.className = "v";
+  v.textContent = value;
+  tr.appendChild(k);
+  tr.appendChild(v);
+  return tr;
+}
+
+function makeBotCard(name, b) {
+  const wrap = document.createElement("div");
+  wrap.className = "bot";
+  const nm = document.createElement("div");
+  nm.className = "name";
+  nm.textContent = name;
+  const val = document.createElement("div");
+  val.className = "v";
+  val.textContent = `${(b.clear_rate * 100).toFixed(0)}%`;
+  const lab = document.createElement("div");
+  lab.className = "lab";
+  const eac = b.eac && Number.isFinite(b.eac) ? fmt(b.eac, 1) : "—";
+  lab.textContent = `EAC ${eac}`;
+  wrap.appendChild(nm);
+  wrap.appendChild(val);
+  wrap.appendChild(lab);
+  return wrap;
+}
+
+async function autoDiscover(batch) {
+  const out = [];
+  for (let i = 0; i < batch.count; i++) {
+    const filename = `L${String(i).padStart(3, "0")}.json`;
+    const url = batch.path + filename;
+    try {
+      const r = await fetch(url);
+      if (!r.ok) break;
+      const data = await r.json();
+      out.push({ name: filename, data });
+    } catch (e) {
+      break;
+    }
+  }
+  return out;
+}
+
+function populateBatchSelect() {
+  const sel = $("#batchSelect");
+  clear(sel);
+  for (const b of BATCHES) {
+    const o = document.createElement("option");
+    o.value = b.id;
+    o.textContent = b.label;
+    sel.appendChild(o);
+  }
+  sel.value = state.batch;
+}
+
+async function loadBatch(batchId) {
+  state.batch = batchId;
+  const b = BATCHES.find((x) => x.id === batchId);
+  if (!b) return;
+  const levels = await autoDiscover(b);
+  setLevels(levels);
+}
+
+function setLevels(levels) {
+  state.levels = levels;
+  const sel = $("#levelSelect");
+  clear(sel);
+  for (const lv of levels) {
+    const o = document.createElement("option");
+    o.value = lv.name;
+    o.textContent = `${lv.data.level_id} — ${lv.name}`;
+    sel.appendChild(o);
+  }
+  state.index = 0;
+  if (levels.length) render();
+  else $("#empty").style.display = "block";
+}
+
+function currentLevel() { return state.levels[state.index]; }
+
+function pickIndex(name) {
+  state.index = Math.max(0, state.levels.findIndex((l) => l.name === name));
+  render();
+}
+
+function step(delta) {
+  if (!state.levels.length) return;
+  state.index = (state.index + delta + state.levels.length) % state.levels.length;
+  $("#levelSelect").value = state.levels[state.index].name;
+  render();
+}
+
+function drawBoard(canvas, board) {
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const { rows, cols, cells } = board;
+  const padding = 16;
+  // Bounding box: even (wide) rows span 0..cols. Odd (narrow) rows shift
+  // right by half a cell but only have cols-1 cells, so they fit in the
+  // same horizontal span as wide rows.
+  const w = canvas.width - padding * 2;
+  const h = canvas.height - padding * 2;
+  const r1 = w / (cols * Math.sqrt(3));
+  const r2 = h / (1.5 * rows + 0.5);
+  const r = Math.min(r1, r2);
+  const dx = Math.sqrt(3) * r;
+  const dy = 1.5 * r;
+  ctx.lineWidth = 1.2;
+  for (let row = 0; row < rows; row++) {
+    const rowCells = cells[row] || [];
+    // Each row may have its own length (alternating widths). Use the
+    // saved length so legacy uniform-width batches still render correctly.
+    const rowLen = rowCells.length;
+    const offset = (row & 1) ? dx / 2 : 0;
+    for (let col = 0; col < rowLen; col++) {
+      const cx = padding + dx / 2 + col * dx + offset;
+      const cy = padding + r + row * dy;
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const a = Math.PI / 6 + (i * Math.PI) / 3;
+        const x = cx + r * Math.cos(a);
+        const y = cy + r * Math.sin(a);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      const color = COLORS[rowCells[col]];
+      if (color) {
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.strokeStyle = "rgba(0,0,0,0.15)";
+        ctx.stroke();
+      } else {
+        ctx.strokeStyle = "rgba(0,0,0,0.06)";
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function render() {
+  const lv = currentLevel();
+  if (!lv) return;
+  $("#empty").style.display = "none";
+  drawBoard($("#board"), lv.data.board);
+
+  const fTbl = $("#features");
+  clear(fTbl);
+  const f = lv.data.features || {};
+  for (const [k, v] of Object.entries(f)) {
+    fTbl.appendChild(makeKvRow(k, fmt(v)));
+  }
+
+  const botsBox = $("#bots");
+  clear(botsBox);
+  const bots = lv.data.bots || {};
+  for (const name of ["weak", "medium", "strong"]) {
+    const b = bots[name];
+    if (!b) continue;
+    botsBox.appendChild(makeBotCard(name, b));
+  }
+
+  const meta = $("#meta");
+  clear(meta);
+  const m = {
+    seed: lv.data.board.seed,
+    rows: lv.data.board.rows,
+    cols: lv.data.board.cols,
+    colors: lv.data.board.num_colors,
+    shots: lv.data.board.shots_remaining,
+  };
+  for (const [k, v] of Object.entries(m)) {
+    meta.appendChild(makeKvRow(k, v));
+  }
+
+  renderRationale(lv.data.rationale || null);
+  renderFormulas(lv.data.rationale?.formulas || []);
+  renderPatterns(lv.data.rationale?.patterns || []);
+}
+
+function renderRationale(r) {
+  const box = $("#rationale");
+  clear(box);
+  if (!r) {
+    const p = document.createElement("div");
+    p.style.color = "#6c7393";
+    p.style.fontSize = "12px";
+    p.textContent = "이 레벨은 rationale 없이 생성되었습니다 (구버전 배치).";
+    box.appendChild(p);
+    return;
+  }
+  const summary = document.createElement("div");
+  summary.className = "summary";
+  summary.textContent = r.summary || "";
+  box.appendChild(summary);
+
+  const rows = [
+    ["레벨대", r.band],
+    ["대칭", r.axis],
+    ["의도", r.intent],
+    ["핵심차원", r.key_feature],
+    ["타겟대비", r.achieved],
+    ["예상플레이", r.expected_play],
+    ["훈련스킬", r.skill_trained],
+  ];
+  for (const [lbl, val] of rows) {
+    if (!val) continue;
+    const row = document.createElement("div");
+    row.className = "row";
+    const ll = document.createElement("div"); ll.className = "lbl"; ll.textContent = lbl;
+    const vv = document.createElement("div"); vv.className = "val"; vv.textContent = val;
+    row.appendChild(ll); row.appendChild(vv);
+    box.appendChild(row);
+  }
+  if (Array.isArray(r.notes) && r.notes.length) {
+    const notes = document.createElement("div");
+    notes.className = "notes";
+    notes.textContent = "⚠ " + r.notes.join(" / ");
+    box.appendChild(notes);
+  }
+}
+
+function makeMethodCard(item, kind) {
+  const card = document.createElement("div");
+  card.className = "card" + (kind === "pattern" ? " pattern" : "");
+
+  const head = document.createElement("div");
+  head.className = "head";
+  head.textContent = item.name;
+  card.appendChild(head);
+
+  if (kind === "formula" && item.formula) {
+    const f = document.createElement("div");
+    f.className = "formula";
+    f.textContent = item.formula;
+    card.appendChild(f);
+  }
+
+  const rows = kind === "formula"
+    ? [["값", item.value], ["기능", item.function], ["왜", item.why]]
+    : [["효과", item.effect], ["왜", item.why]];
+
+  for (const [lbl, val] of rows) {
+    if (!val) continue;
+    const row = document.createElement("div");
+    row.className = "kv";
+    const l = document.createElement("div"); l.className = "lbl"; l.textContent = lbl;
+    const v = document.createElement("div"); v.className = "val"; v.textContent = val;
+    row.appendChild(l); row.appendChild(v);
+    card.appendChild(row);
+  }
+  return card;
+}
+
+function renderFormulas(formulas) {
+  const box = $("#formulas");
+  clear(box);
+  if (!formulas.length) {
+    const p = document.createElement("div");
+    p.style.color = "#6c7393";
+    p.style.fontSize = "12px";
+    p.textContent = "이 레벨은 공식 메타 없이 생성되었습니다 (구버전 배치).";
+    box.appendChild(p);
+    return;
+  }
+  for (const f of formulas) box.appendChild(makeMethodCard(f, "formula"));
+}
+
+function renderPatterns(patterns) {
+  const box = $("#patterns");
+  clear(box);
+  if (!patterns.length) {
+    const p = document.createElement("div");
+    p.style.color = "#6c7393";
+    p.style.fontSize = "12px";
+    p.textContent = "이 레벨은 패턴 메타 없이 생성되었습니다 (구버전 배치).";
+    box.appendChild(p);
+    return;
+  }
+  for (const p of patterns) box.appendChild(makeMethodCard(p, "pattern"));
+}
+
+$("#batchSelect").addEventListener("change", (e) => loadBatch(e.target.value));
+$("#levelSelect").addEventListener("change", (e) => pickIndex(e.target.value));
+$("#prev").addEventListener("click", () => step(-1));
+$("#next").addEventListener("click", () => step(1));
+$("#filePick").addEventListener("change", async (e) => {
+  const files = [...e.target.files];
+  const loaded = [];
+  for (const f of files) {
+    try {
+      const text = await f.text();
+      loaded.push({ name: f.name, data: JSON.parse(text) });
+    } catch (err) {
+      console.warn("failed to parse", f.name, err);
+    }
+  }
+  loaded.sort((a, b) => a.name.localeCompare(b.name));
+  setLevels(loaded);
+});
+
+(async () => {
+  populateBatchSelect();
+  await loadBatch(state.batch);
+  if (!state.levels.length) $("#empty").style.display = "block";
+})();
+</script>
+</body>
+</html>

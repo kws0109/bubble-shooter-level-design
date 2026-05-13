@@ -1,0 +1,61 @@
+{
+  "n_levels": 100,
+  "regressions": {
+    "weak_clear_rate": {
+      "target": "weak_clear_rate",
+      "n": 100,
+      "r_squared": 0.22300069050843796,
+      "intercept": 0.577333333333333,
+      "coefficients": {
+        "color_entropy": 0.05213688902041338,
+        "max_chain_depth": 0.00967424763921864,
+        "avg_cluster_size": 0.041736479025718955,
+        "floating_potential": 0.010462452823956825,
+        "density": -0.1422339034101925,
+        "shot_pressure": -0.13844672225436536
+      }
+    },
+    "medium_clear_rate": {
+      "target": "medium_clear_rate",
+      "n": 100,
+      "r_squared": 0.2866648779791505,
+      "intercept": 0.6361666666666665,
+      "coefficients": {
+        "color_entropy": 0.025923774303292343,
+        "max_chain_depth": 0.008178109319849095,
+        "avg_cluster_size": 0.06419615813940761,
+        "floating_potential": 0.0013910994140735496,
+        "density": -0.18245368029587222,
+        "shot_pressure": -0.16994554759226174
+      }
+    },
+    "strong_clear_rate": {
+      "target": "strong_clear_rate",
+      "n": 100,
+      "r_squared": 0.23858994971240133,
+      "intercept": 0.8893333333333332,
+      "coefficients": {
+        "color_entropy": 0.016049939918299734,
+        "max_chain_depth": 0.013355835707501446,
+        "avg_cluster_size": 0.04014369413825358,
+        "floating_potential": -0.006487326819064035,
+        "density": -0.12361901997777239,
+        "shot_pressure": -0.12537631338835903
+      }
+    },
+    "strong_eac_all": {
+      "target": "strong_eac_all",
+      "n": 100,
+      "r_squared": 0.2870164930920607,
+      "intercept": 24.40216666666667,
+      "coefficients": {
+        "color_entropy": -1.1618427037830064,
+        "max_chain_depth": -0.4068061369353906,
+        "avg_cluster_size": -2.768880202199716,
+        "floating_potential": 0.01795333990514214,
+        "density": 9.37310650245808,
+        "shot_pressure": 8.979310299905462
+      }
+    }
+  }
+}

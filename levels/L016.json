@@ -1,0 +1,176 @@
+{
+  "level_id": "L016",
+  "board": {
+    "rows": 8,
+    "cols": 10,
+    "num_colors": 3,
+    "shots_remaining": 14,
+    "seed": 1016,
+    "cells": [
+      [
+        2,
+        1,
+        3,
+        2,
+        1,
+        2,
+        2,
+        3,
+        2,
+        3
+      ],
+      [
+        3,
+        1,
+        2,
+        3,
+        2,
+        3,
+        1,
+        1,
+        3,
+        0
+      ],
+      [
+        0,
+        2,
+        1,
+        1,
+        1,
+        2,
+        2,
+        1,
+        2,
+        1
+      ],
+      [
+        1,
+        3,
+        3,
+        2,
+        3,
+        1,
+        3,
+        2,
+        2,
+        3
+      ],
+      [
+        3,
+        3,
+        1,
+        0,
+        0,
+        3,
+        0,
+        3,
+        1,
+        1
+      ],
+      [
+        1,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0,
+        2,
+        0,
+        3
+      ],
+      [
+        0,
+        3,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "features": {
+    "color_entropy": 1.5844322829781465,
+    "max_chain_depth": 9.0,
+    "avg_cluster_size": 1.625,
+    "floating_potential": 0.6349206349206349,
+    "density": 0.65,
+    "shot_pressure": 0.2692307692307692
+  },
+  "bots": {
+    "weak": {
+      "bot_name": "weak",
+      "runs": 60,
+      "clear_rate": 0.9333333333333333,
+      "eac": 27.732142857142858,
+      "eac_all": 28.683333333333334,
+      "avg_popped": 80.41666666666667
+    },
+    "medium": {
+      "bot_name": "medium",
+      "runs": 60,
+      "clear_rate": 0.95,
+      "eac": 23.0,
+      "eac_all": 23.95,
+      "avg_popped": 75.83333333333333
+    },
+    "strong": {
+      "bot_name": "strong",
+      "runs": 60,
+      "clear_rate": 0.95,
+      "eac": 22.43859649122807,
+      "eac_all": 23.416666666666668,
+      "avg_popped": 75.26666666666667
+    }
+  },
+  "spec": {
+    "target_features": {
+      "color_entropy": 1.9483385680594123,
+      "max_chain_depth": 9,
+      "floating_potential": 0.6318009855670281,
+      "density": 0.6157080952075045
+    },
+    "weights": {
+      "color_entropy": 1.0,
+      "max_chain_depth": 0.5,
+      "floating_potential": 1.0,
+      "density": 2.0
+    },
+    "rows": 8,
+    "cols": 10,
+    "num_colors": 3,
+    "shots_remaining": 14,
+    "target_density": 0.6157080952075045,
+    "num_seeds": 5,
+    "level_index": 16,
+    "symmetric": false,
+    "symmetry_axis": "none"
+  },
+  "rationale": {
+    "summary": "초반 3색 — 색 분리 훈련",
+    "band": "L017: 초반 (3색)",
+    "axis": "비대칭 자유 배치 — 패턴 의존을 막고 즉흥 판단을 요구.",
+    "intent": "색 엔트로피 1.95로 색 분포를 균등화. 3색 중 매칭 후보를 빠르게 골라내는 시야 훈련.",
+    "key_feature": "color_entropy",
+    "achieved": "color_entropy -0.36 이탈 (목표 1.95 → 도달 1.58)",
+    "expected_play": "기초 — 즉각 클리어 가능, 온보딩 적합. 봇 W93% / S95%, 평균 23발.",
+    "skill_trained": "3색 분리와 빠른 색 탐색.",
+    "notes": []
+  }
+}

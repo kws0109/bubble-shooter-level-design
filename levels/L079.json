@@ -1,0 +1,176 @@
+{
+  "level_id": "L079",
+  "board": {
+    "rows": 8,
+    "cols": 10,
+    "num_colors": 6,
+    "shots_remaining": 20,
+    "seed": 1079,
+    "cells": [
+      [
+        4,
+        4,
+        4,
+        5,
+        4,
+        5,
+        3,
+        4,
+        2,
+        2
+      ],
+      [
+        4,
+        4,
+        4,
+        3,
+        6,
+        6,
+        4,
+        4,
+        4,
+        2
+      ],
+      [
+        4,
+        4,
+        2,
+        2,
+        4,
+        0,
+        3,
+        2,
+        4,
+        4
+      ],
+      [
+        2,
+        5,
+        2,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ],
+      [
+        0,
+        6,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        4,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "features": {
+    "color_entropy": 1.9496834842834985,
+    "max_chain_depth": 9.0,
+    "avg_cluster_size": 1.8636363636363635,
+    "floating_potential": 0.5,
+    "density": 0.5125,
+    "shot_pressure": 0.4878048780487805
+  },
+  "bots": {
+    "weak": {
+      "bot_name": "weak",
+      "runs": 60,
+      "clear_rate": 0.5666666666666667,
+      "eac": 40.55882352941177,
+      "eac_all": 48.983333333333334,
+      "avg_popped": 87.71666666666667
+    },
+    "medium": {
+      "bot_name": "medium",
+      "runs": 60,
+      "clear_rate": 0.6166666666666667,
+      "eac": 35.54054054054054,
+      "eac_all": 44.916666666666664,
+      "avg_popped": 83.91666666666667
+    },
+    "strong": {
+      "bot_name": "strong",
+      "runs": 60,
+      "clear_rate": 0.8333333333333334,
+      "eac": 35.56,
+      "eac_all": 39.63333333333333,
+      "avg_popped": 79.7
+    }
+  },
+  "spec": {
+    "target_features": {
+      "color_entropy": 1.943766333360852,
+      "max_chain_depth": 9,
+      "floating_potential": 0.482686902066544,
+      "density": 0.5081954595553064
+    },
+    "weights": {
+      "color_entropy": 1.0,
+      "max_chain_depth": 0.5,
+      "floating_potential": 1.0,
+      "density": 2.0
+    },
+    "rows": 8,
+    "cols": 10,
+    "num_colors": 6,
+    "shots_remaining": 20,
+    "target_density": 0.5081954595553064,
+    "num_seeds": 8,
+    "level_index": 79,
+    "symmetric": false,
+    "symmetry_axis": "none"
+  },
+  "rationale": {
+    "summary": "엔드게임 6색 — 키스톤 부유 훈련",
+    "band": "L080: 엔드게임 (6색)",
+    "axis": "비대칭 자유 배치 — 패턴 의존을 막고 즉흥 판단을 요구.",
+    "intent": "부유 잠재력 0.5 — 천장과 약하게 연결된 키스톤 버블을 한 둘 떨어뜨리면 그 아래 부유 그룹이 함께 풀리도록 설계.",
+    "key_feature": "floating_potential",
+    "achieved": "floating_potential 일치 (목표 0.48 → 도달 0.50)",
+    "expected_play": "표준 난이도 — 평균적 플레이어가 1-2회 시도로 클리어. 봇 W57% / S83%, 평균 40발.",
+    "skill_trained": "키스톤 버블 인식 — 부수면 풍성한 부유.",
+    "notes": []
+  }
+}

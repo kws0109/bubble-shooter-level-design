@@ -1,0 +1,176 @@
+{
+  "level_id": "L068",
+  "board": {
+    "rows": 8,
+    "cols": 10,
+    "num_colors": 7,
+    "shots_remaining": 22,
+    "seed": 1068,
+    "cells": [
+      [
+        6,
+        6,
+        6,
+        0,
+        1,
+        1,
+        0,
+        6,
+        6,
+        6
+      ],
+      [
+        1,
+        5,
+        5,
+        6,
+        5,
+        5,
+        6,
+        5,
+        5,
+        1
+      ],
+      [
+        6,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        6
+      ],
+      [
+        6,
+        0,
+        1,
+        1,
+        4,
+        4,
+        1,
+        1,
+        0,
+        6
+      ],
+      [
+        6,
+        4,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        4,
+        6
+      ],
+      [
+        6,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        6
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "features": {
+    "color_entropy": 1.8129452762598803,
+    "max_chain_depth": 5.0,
+    "avg_cluster_size": 2.375,
+    "floating_potential": 1.1666666666666667,
+    "density": 0.475,
+    "shot_pressure": 0.5789473684210527
+  },
+  "bots": {
+    "weak": {
+      "bot_name": "weak",
+      "runs": 60,
+      "clear_rate": 0.7,
+      "eac": 30.30952380952381,
+      "eac_all": 41.016666666666666,
+      "avg_popped": 77.16666666666667
+    },
+    "medium": {
+      "bot_name": "medium",
+      "runs": 60,
+      "clear_rate": 0.5666666666666667,
+      "eac": 21.029411764705884,
+      "eac_all": 40.516666666666666,
+      "avg_popped": 76.25
+    },
+    "strong": {
+      "bot_name": "strong",
+      "runs": 60,
+      "clear_rate": 0.9833333333333333,
+      "eac": 16.847457627118644,
+      "eac_all": 17.666666666666668,
+      "avg_popped": 55.56666666666667
+    }
+  },
+  "spec": {
+    "target_features": {
+      "color_entropy": 1.7854868505569654,
+      "max_chain_depth": 5,
+      "floating_potential": 1.198884523075408,
+      "density": 0.4244229845257691
+    },
+    "weights": {
+      "color_entropy": 1.0,
+      "max_chain_depth": 0.5,
+      "floating_potential": 1.0,
+      "density": 2.0
+    },
+    "rows": 8,
+    "cols": 10,
+    "num_colors": 7,
+    "shots_remaining": 22,
+    "target_density": 0.4244229845257691,
+    "num_seeds": 7,
+    "level_index": 68,
+    "symmetric": false,
+    "symmetry_axis": "horizontal"
+  },
+  "rationale": {
+    "summary": "엔드게임 7색 — 큰 콤보 훈련",
+    "band": "L069: 엔드게임 (7색)",
+    "axis": "좌우 대칭 패턴 — 시각적 일관성, 양쪽 동시 학습 가능.",
+    "intent": "한 발에 5개 이상이 깨지는 클러스터를 의도적으로 배치해, 플레이어가 큰 콤보의 시각·청각 보상을 경험하도록 만든다.",
+    "key_feature": "max_chain_depth",
+    "achieved": "max_chain_depth 일치 (목표 5.00 → 도달 5.00)",
+    "expected_play": "표준 난이도 — 평균적 플레이어가 1-2회 시도로 클리어. 봇 W70% / S98%, 평균 18발.",
+    "skill_trained": "큰 클러스터 식별과 한 발 콤보.",
+    "notes": []
+  }
+}

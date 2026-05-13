@@ -1,0 +1,165 @@
+{
+  "level_id": "L082",
+  "board": {
+    "rows": 8,
+    "cols": 10,
+    "num_colors": 7,
+    "shots_remaining": 22,
+    "seed": 1082,
+    "cells": [
+      [
+        0,
+        3,
+        3,
+        5,
+        0,
+        0,
+        2,
+        0,
+        3,
+        0
+      ],
+      [
+        4,
+        0,
+        0,
+        3,
+        4,
+        4,
+        5,
+        0,
+        3,
+        0
+      ],
+      [
+        4,
+        4,
+        4,
+        2,
+        5,
+        0,
+        0,
+        0,
+        0,
+        3
+      ],
+      [
+        2,
+        0,
+        0,
+        5,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0,
+        5,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        4,
+        4,
+        2,
+        5,
+        0,
+        0,
+        0,
+        0,
+        3
+      ],
+      [
+        4,
+        0,
+        0,
+        3,
+        4,
+        4,
+        5,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        3,
+        5,
+        0,
+        0,
+        2,
+        0,
+        3,
+        0
+      ]
+    ]
+  },
+  "features": {
+    "color_entropy": 1.9261207468426804,
+    "max_chain_depth": 8.0,
+    "avg_cluster_size": 1.8181818181818181,
+    "floating_potential": 1.2040816326530612,
+    "density": 0.5,
+    "shot_pressure": 0.55
+  },
+  "bots": {
+    "weak": {
+      "bot_name": "weak",
+      "runs": 60,
+      "clear_rate": 0.36666666666666664,
+      "eac": 42.77272727272727,
+      "eac_all": 57.483333333333334,
+      "avg_popped": 93.7
+    },
+    "medium": {
+      "bot_name": "medium",
+      "runs": 60,
+      "clear_rate": 0.48333333333333334,
+      "eac": 33.89655172413793,
+      "eac_all": 50.483333333333334,
+      "avg_popped": 87.48333333333333
+    },
+    "strong": {
+      "bot_name": "strong",
+      "runs": 60,
+      "clear_rate": 0.8,
+      "eac": 34.583333333333336,
+      "eac_all": 40.86666666666667,
+      "avg_popped": 79.93333333333334
+    }
+  },
+  "spec": {
+    "target_features": {
+      "color_entropy": 1.9098343369147035,
+      "max_chain_depth": 6,
+      "floating_potential": 1.2023274785684754,
+      "density": 0.48114574347955275
+    },
+    "weights": {
+      "color_entropy": 1.0,
+      "max_chain_depth": 0.5,
+      "floating_potential": 1.0,
+      "density": 2.0
+    },
+    "rows": 8,
+    "cols": 10,
+    "num_colors": 7,
+    "shots_remaining": 22,
+    "target_density": 0.48114574347955275,
+    "num_seeds": 8,
+    "level_index": 82,
+    "symmetric": false,
+    "symmetry_axis": "vertical"
+  }
+}
