@@ -135,15 +135,47 @@ html, body {
 }
 
 /* ------------------- COVER ------------------- */
+.cover-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin: 0 0 28px;
+}
+.cover-head .title-block { flex: 1 1 auto; min-width: 0; }
 .cover h1 {
-  font-size: 22pt;
+  font-size: 20pt;
   margin: 0 0 6px;
   letter-spacing: -0.3px;
+  white-space: nowrap;
 }
 .cover .subtitle {
-  font-size: 11pt;
+  font-size: 10.5pt;
   color: var(--ink-3);
-  margin: 0 0 28px;
+  margin: 0;
+}
+.cover-id {
+  text-align: right;
+  font-size: 8.5pt;
+  color: var(--ink-3);
+  line-height: 1.55;
+  padding-top: 4px;
+  border-top: 2px solid var(--ink-1);
+  padding-left: 12px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.cover-id .name {
+  font-weight: 600;
+  color: var(--ink-1);
+  font-size: 10.5pt;
+  letter-spacing: -0.1px;
+  margin-bottom: 3px;
+}
+.cover-id a {
+  color: var(--ink-3);
+  text-decoration: none;
+  word-break: break-all;
 }
 .cover h2 {
   font-size: 13pt;
@@ -478,8 +510,17 @@ def render_cover(summary: dict) -> str:
     )
     return f"""
     <section class="page cover">
-      <h1>AI 활용 버블슈터 레벨 디자인</h1>
-      <p class="subtitle">절차적 생성 + 봇 시뮬레이션 + 룰베이스 설명 자동화 — 10레벨 카드</p>
+      <div class="cover-head">
+        <div class="title-block">
+          <h1>AI 활용 버블슈터 레벨 디자인</h1>
+          <p class="subtitle">절차적 생성 + 봇 시뮬레이션 + 룰베이스 설명 자동화 — 10레벨 카드</p>
+        </div>
+        <div class="cover-id">
+          <div class="name">김우성</div>
+          <div><a href="mailto:kws0553@gmail.com">kws0553@gmail.com</a></div>
+          <div><a href="https://github.com/kws0109/bubble-shooter-level-design">github.com/kws0109/bubble-shooter-level-design</a></div>
+        </div>
+      </div>
 
       <h2>설계 목적</h2>
       <p>
